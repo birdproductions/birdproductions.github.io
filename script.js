@@ -7,4 +7,18 @@ $(function () {
 			obj.after(data);
 	 	}, 'text');
 	})
+	var urlParams = new URLSearchParams(window.location.search);
+	if (urlParams.has("redirect")) {
+		window.location.replace(urlParams.get("redirect"));
+	}
+	var markdown = $("[data-markdown]")
+	$.each(markdown, function () {
+		var md = $(this)
+		$.ajax({
+			url: $(this).data("markdown"),
+			success: function (response) {
+				md.html(marked(response))
+			}
+		})
+	})
 })
